@@ -1,4 +1,12 @@
+# Overview
+
+> __Note__ that this is very incomplete and should not be taken as being exact steps to implement the tree-shaking algorithm.
+
+This contains a partial specification for how to implement tree shaking in [steal-tools](https://github.com/stealjs/steal-tools). It is currently incomplete.
+
 # Core concepts
+
+The core algorithm involves
 
 # The tree-shaking algorithm
 
@@ -25,42 +33,3 @@ When invoked as `determineUsedExports(node)` run the following steps:
   1. Otherwise, return `undefined`.
 
 # Determine an ES module's used exports
-
-When invoked as `determineUsedExportsForESModule(node)` run the following steps:
-
-1. Set `metadata` to equal `node.load.metadata`.
-1. Set `unusedIdentifiers` to equal a new *Set*.
-1. For each import, add to the `unusedIdentifiers` Set.
-1. Set `exportNames` to equal a new *Set*.
-1. Walk the AST, adding exports to `exportNames`.
-1. Walk the AST. For each identifier run these steps:
-  1. If the identifier is included in `exportNames` check if:
-    1. If `metadata.usedExports.has(identifier)` returns false.
-
-
-
-
-1. Set `metadata` to equal `node.load.metadata`.
-1. Set `usedImports` to equal a new *Map*.
-1. For each import run the following steps:
-  1. Set `moduleName` to equal the dependency's module name.
-  1. Set `imports` to equal a new *Set*.
-  1. Call `usedImports.set(moduleName, imports)`.
-  1. For each identifier in the import declaration run:
-    1. `imports.add(identifier)`.
-
-
-
-
-1. Set `metadata` to equal `node.load.metadata`.
-1. If `export *` export exists, set `metadata.allExportsUsed` to equal `true`.
-  1. return undefined.
-1. Set `usedExports` to equal `node.metadata.usedExports`.
-1. Set `moduleName` to equal `node.load.name`.
-1. For each named export run the following substeps:
-  1. Set `exportName` to equal the identifier.
-  1. If `usedByOthers(moduleName, exportName)` returns `true`, push `exportName` into `usedExports`.
-
-
-
-1. If `export default` export exists, push `"default"` into `usedExports`.
